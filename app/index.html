@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <!-- saved from url=(0048)http://getbootstrap.com/2.3.2/examples/hero.html -->
-<html lang="en" ng-app><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
+<html lang="en" ng-app="vote">
+  <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
     <meta charset="utf-8">
     <title>Bootstrap, from Twitter</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +20,7 @@
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
-      <script src="../assets/js/html5shiv.js"></script>
+      <script src="./scripts/assets/js/html5shiv.js"></script>
     <![endif]-->
 
     <!-- Fav and touch icons -->
@@ -73,13 +74,11 @@
     <div class="container">
 
       <!-- Main hero unit for a primary marketing message or call to action -->
-      <div class="hero-unit">
-        <h1>Hello, world!</h1>
-        <p>
-          {{5 + 11}}
-        </p>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-        <p><a href="http://getbootstrap.com/2.3.2/examples/hero.html#" class="btn btn-primary btn-large">Learn more »</a></p>
+      <div class="hero-unit" ng-controller="VoteController as vote">
+        <div ng-repeat="poll in vote.polls">
+          <h3>{{poll.title}}</h3>
+          <h4>{{poll.author}}</h4>
+        </div>
       </div>
 
       <!-- Example row of columns -->
@@ -112,20 +111,21 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="./index_files/jquery.js"></script>
-    <script src="./index_files/bootstrap-transition.js"></script>
-    <script src="./index_files/bootstrap-alert.js"></script>
-    <script src="./index_files/bootstrap-modal.js"></script>
-    <script src="./index_files/bootstrap-dropdown.js"></script>
-    <script src="./index_files/bootstrap-scrollspy.js"></script>
-    <script src="./index_files/bootstrap-tab.js"></script>
-    <script src="./index_files/bootstrap-tooltip.js"></script>
-    <script src="./index_files/bootstrap-popover.js"></script>
-    <script src="./index_files/bootstrap-button.js"></script>
-    <script src="./index_files/bootstrap-collapse.js"></script>
-    <script src="./index_files/bootstrap-carousel.js"></script>
-    <script src="./index_files/bootstrap-typeahead.js"></script>
-    <script src="./index_files/angular.min.js"></script>
+    <script src="/scripts/index_files/jquery.js"></script>
+    <script src="/scripts/index_files/bootstrap-transition.js"></script>
+    <script src="/scripts/index_files/bootstrap-alert.js"></script>
+    <script src="/scripts/index_files/bootstrap-modal.js"></script>
+    <script src="/scripts/index_files/bootstrap-dropdown.js"></script>
+    <script src="/scripts/index_files/bootstrap-scrollspy.js"></script>
+    <script src="/scripts/index_files/bootstrap-tab.js"></script>
+    <script src="/scripts/index_files/bootstrap-tooltip.js"></script>
+    <script src="/scripts/index_files/bootstrap-popover.js"></script>
+    <script src="/scripts/index_files/bootstrap-button.js"></script>
+    <script src="/scripts/index_files/bootstrap-collapse.js"></script>
+    <script src="/scripts/index_files/bootstrap-carousel.js"></script>
+    <script src="/scripts/index_files/bootstrap-typeahead.js"></script>
+    <script src="/scripts/index_files/angular.min.js"></script>
+    <script src="/scripts/vote.js"></script>
 
   
 

@@ -4,7 +4,9 @@
 		$scope.polls = [];
 		$http.get("http://127.0.0.1:3000/polls/get/").
 			success(function(data){
-				$scope.polls.push(data[0]);
+				data.forEach(function(item){
+					$scope.polls.push(item);
+				})
 			});
 
 	});

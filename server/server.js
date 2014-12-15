@@ -19,13 +19,22 @@ app.get('/polls/get/', function (req, res) {
 	res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
 	var polls = [];
 	polls.push({
-		title: "test poll 2",
+		title: "test poll",
 		options: {
 			foo: 1,
 			bar: 0,
 			buzz: 3,
 		},
 		author: "Rob",
+	},
+	{
+		title: "test poll 2",
+		options: {
+			foo: 12,
+			bar: 10,
+			buzz: 3,
+		},
+		author: "Evan",
 	}); 
   res.send(JSON.stringify(polls))
 });

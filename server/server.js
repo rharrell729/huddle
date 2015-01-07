@@ -1,6 +1,6 @@
 var express = require('express')
 var app = express()
-var appRoot = 'C:/Users/evboyle/Documents/vote/'
+var appRoot = '/Users/Rob/Projects/vote/'
 
 app.use(express.static(appRoot + '/app'));
 app.use('/scripts',  express.static(appRoot + '/app'));

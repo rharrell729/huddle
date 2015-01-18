@@ -75,3 +75,20 @@ Poll Categories:
 3. Activity choice (where should we go, and when?)
 4. ...
 
+CRUD:
+
+create: 
+	1. set up a route for /create
+		a. controller //controller doesn't have to do anything at this point, maybe have a $scope.helloWorld ="hello world" that you can read in the template
+		b. html template <div> hello world or {{helloWorld}}</div>
+		c. call that route from index.html (push a button or something?)
+	2. use this new "view" to create a simple form
+		a. should be able to fill out the form with all relevent info and hit "submit"
+		b. submit should add to a javascript object. 
+	3. add SQL operations
+		a. creat table polls
+			i. should have: name, vote count etc...
+		b. create express route that you can call to post to sql db /postPolls or something
+		b. update submit() method to call new express route
+
+

@@ -1,0 +1,28 @@
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+        <h2>Hello, world!</h2>
+        <p>Thaks for trying vote.</p>
+      </div>
+    </div>
+
+    <div class="container">
+
+    	<h2>My Polls</h2>
+      <!-- Main hero unit for a primary marketing message or call to action -->
+      <div class="hero-unit" ng-controller="homeCtrl">
+        <div ng-repeat="poll in polls">
+          <h3>{{poll.title}}</h3>
+          <h4>{{poll.author}}</h4>
+          <h5>{{poll.options}}</h5>
+        </div>
+      </div>
+
+      <p><a class="btn btn-primary btn-lg" href="#/create" role="button">Create Poll &raquo;</a></p>
+
+      <hr>
+
+      <footer>
+        <p>&copy; Vote 2014</p>
+      </footer>
+    </div> <!-- /container -->

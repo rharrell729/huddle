@@ -2,23 +2,36 @@
     <div class="jumbotron">
       <div class="container">
         <h2>Hello, world!</h2>
-        <p>Thaks for trying vote.</p>
+        <p>Thanks for using Huddle, the ultimate group decision maker.</p>
       </div>
     </div>
 
     <div class="container">
 
-    	<h2>My Polls</h2>
+    	<h2>My Huddles</h2>
       <!-- Main hero unit for a primary marketing message or call to action -->
       <div class="hero-unit" ng-controller="homeCtrl">
         <div ng-repeat="poll in polls">
-          <h3>{{poll.title}}</h3>
-          <h4>{{poll.author}}</h4>
-          <h5>{{poll.options}}</h5>
+          <h4>{{poll.title}}</h4>
+          <div class="row">
+            <div class="col-md-1">{{poll.option1}}</div>
+            <div class="col-md-1">{{poll.score1}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-1">{{poll.option2}}</div>
+            <div class="col-md-1">{{poll.score2}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-1">{{poll.option3}}</div>
+            <div class="col-md-1">{{poll.score3}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-1">Sent to: {{poll.recipient}}, {{poll.recipient}}</div>
+          </div>
         </div>
       </div>
 
-      <p><a class="btn btn-primary btn-lg" href="#/create" role="button">Create Poll &raquo;</a></p>
+      <p><a class="btn btn-primary btn-lg" href="#/create" role="button">Create Huddle &raquo;</a></p>
 
       <hr>
 

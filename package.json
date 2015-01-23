@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/EvanBoyle/vote/issues"
   },
-  "homepage": "https://github.com/EvanBoyle/vote"
+  "homepage": "https://github.com/EvanBoyle/vote",
+  "dependencies": {
+    "body-parser": "^1.10.2",
+    "sqlite3": "^3.0.4"
+  }
 }

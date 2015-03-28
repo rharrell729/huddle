@@ -1,0 +1,16 @@
+The yard where the bones go.
+
+controllers.js
+
+	homectrl
+
+	//display polls
+	/*$http.get("http://127.0.0.1:3000/polls/get/").
+		success(function(data){
+			data.forEach(function(item){
+				$scope.polls.push(item);
+				console.log($scope.polls[0]);
+				$scope.$apply();
+			})
+	});
+	*/

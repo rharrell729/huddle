@@ -3,7 +3,8 @@
 (function(){
 var app = angular.module('vote', [
 	'ngRoute',
-	'voteControllers'
+	'voteControllers',
+  'huddleServices'
 ]);
 
 app.config((['$routeProvider',

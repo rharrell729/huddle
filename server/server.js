@@ -1,8 +1,8 @@
-var express = require('express')
-var app = express()
-var appRoot = '/Users/Rob/Projects/vote/'
+var express = require('express');
+var app = express();
+var appRoot = '../app';
 
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
 
 //For sqlite
 var http = require('http');
@@ -15,15 +15,15 @@ app.use(bodyParser.urlencoded({
 	extended: true
 }));
 app.use(express.static(appRoot + '/app'));
-app.use('/scripts',  express.static(appRoot + '/app'));
+app.use('/scripts',  express.static(appRoot));
+app.use('/partials', express.static(appRoot + '/partials'));
 
 app.get('/', function (req, res) {
-  res.sendFile('app/index.html', {root: appRoot});
+  	res.sendFile('views/index.html', {root: appRoot});
 });
-
-app.get('/foo/', function (req, res) {
-  res.send('Hello foo')
-});
+app.get('/create', function(req, res) {
+	res.sendFile('views/index.html', { root: appRoot});
+})
 
 //add new poll to dB
 app.post('/polls/post', function (req, res){
@@ -144,4 +144,4 @@ app.get('/polls/get/', function (req, res) {
 	});
 });
 
-app.listen(3000)
+app.listen(3000);

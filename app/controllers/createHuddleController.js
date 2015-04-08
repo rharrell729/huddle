@@ -29,7 +29,7 @@ app.controller('createHuddleCtrl', ['$scope', '$routeParams', '$http', function(
     	$scope.poll.lifetimeDisplayed = item;
     	var str = item.split(" ");
     	$scope.poll.lifetimeParsed = str[0];
-    	console.log($scope.poll.lifetimeParsed);
+    	//console.log($scope.poll.lifetimeParsed);
     };
 
 	$scope.poll.submit = function(item, event){

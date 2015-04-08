@@ -32,8 +32,8 @@ app.post('/polls/post', function (req, res){
 		recipient = req.body.recipient;
 		lifetime = req.body.lifetime;
 
-	var optionsString = JSON.stringify(options);
-	console.log(optionsString);
+	//var optionsString = JSON.stringify(options);
+	//console.log(optionsString);
 
 	//Fill the rest of the options with dummy data
 	var optionNum = options.length;
@@ -43,14 +43,26 @@ app.post('/polls/post', function (req, res){
 			num : optionNum
 		});
 	};
+	
 
+	
 	db.serialize(function() {
 		db.run("CREATE TABLE if not exists polls (title TEXT, option1 TEXT, option2 TEXT, option3 TEXT, option4 TEXT, option5 TEXT, score1 INT, score2 INT, score3 INT, score4 INT, score5 INT, recipient TEXT, lifetime INT, isVisible INT, hasEnded INT, Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP, id INTEGER PRIMARY KEY AUTOINCREMENT)");
 		var stmt = db.prepare("INSERT INTO polls (title, option1, option2, option3, option4, option5, score1, score2, score3, score4, score5, recipient, lifetime, isVisible, hasEnded) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		stmt.run(title, options[0].text, options[1].text, options[2].text, options[3].text, options[4].text, 0, 0, 0, 0, 0, recipient, lifetime, 1, 0);	
 		stmt.finalize();
 	});
+	
+/*
+	db.serialize(function() {
+		db.run("CREATE TABLE if not exists options (optionName TEXT, optionScore INT, huddleID INT, FOREIGN KEY (huddleID) REFERENCES polls(id))");
 
+		var stmt = db.prepare("INSERT INTO options (optionName, optionSCore, huddleID) VALUES (?, ?, ?)");
+		options.forEach(function(option){
+			stmt.run(option.text, 1, 1);
+		}); 
+	});
+*/
 	//db.close();
 	res.send();
 });

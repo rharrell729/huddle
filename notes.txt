@@ -1,49 +1,46 @@
-Notes.txt
+#####MVP#####
+April:
+-Cleanup
+	-move options/recipients into separate tables: Rob; 1 hr
+	-fix timer functionality
+		-currently "poll ended" state gets applied to all polls after only one has ended
+	-apply "huddle" terminology throughout (replace vote/poll/etc)
+-Creating new huddles and sending to people
+-User management
+-Voting on huddles
+-Time range on huddle creation
 
-TODO:
+May:
+-Integrate with yelp during option selection
+-Display yelp on huddle page if applicable
+-Basic mobile readiness
+-Deploy
+-Strategy for validating the MVP: Rob; 1hr
 
-misc:
-	-get ownership from evan
-	-generally improve UI - form modal
-	-lock domain
+#####Post-MVP#####
+Functional:
+-Add dates + times to options
+-Types/cateogires of huddle activities
+-Integrate different API sources
+-Mapping/location capability
+-Filtering additional context (weather)
+-App wrapper/UI improvements
+	-render option image if available
+-Post huddle choice activities
+-On mobile, interact with your contacts
+-On mobile, push notifications
+-Social discussions on huddle options
+-Follow up on decision
+-Intelligent suggestions
 
-March
-
-1. get the U + D of crud
-	-delete vote (or auto delete after it expires)
-		-timer functionality
-		-winner functionality
-
-3. Create
-	-variable number of recipients
-	-timestamp; timer functionality
-	-add dates/times to options
-		-will need some sort of unique identifier to ensure we don't update the wrong score of another option with the same name
-	-category dropdown
-
-4. add user functionality***
-	-create user
-	-tie users to polls
-		-polls have an author (user)
-	-render polls authored and sent to user
-
-April
-
-5. integrate with yelp/google maps/urbanspoon/tripadvisor api
-	-location info (search)
-	-display rating/description/image
+Business:
+-Figure out growth strategy
+-general marketization
+-Lock down domain name
+-Decide on equity split, other initial business concerns
 
 
-May
-
-7. make work on phones (lol)
-	-pull down contact info
-	-touch notifications
-
-8. marketize
-	-android/windows/iphone stores
-	-make into an app?
-	-spread the word
+****Legacy Notes****
 
 Objects:
 	1. User
@@ -113,10 +110,4 @@ Functionality:
 	a. open poll
 	a. submit message
 	b. another user can comment or reply to message
-
-Poll Categories:
-1. Basic vote (why is the sky blue)
-2. Event planning (birthday party ideas)
-3. Activity choice (where should we go, and when?)
-4. ...
 

@@ -5,6 +5,7 @@ app.controller('homeCtrl', ['$scope', '$http', '$timeout','pollsService', functi
 
 	pollsService.getPolls().success(function(data){
 		data.forEach(function(item){
+			console.log(item);
 				var poll = {
 					title : item.title,
 					options : [],
@@ -78,14 +79,13 @@ app.controller('homeCtrl', ['$scope', '$http', '$timeout','pollsService', functi
 	    		timeDiff = localTime.getTimezoneOffset();
 	    		currentTime = localTime.getTime() + timeDiff * 60000;
 	    		poll.timeleft = ((poll.createdTime + 60000*item.lifetime) - currentTime) / 60000;
-	    		console.log(poll.timeleft);
 
 	    		$timeout(pollEnded, Math.max(poll.timeleft, 0));
 
 	    		//if(poll.timeleft <= 0){
 	    		function pollEnded(){
-	    			console.log(poll);
-	    			console.log(poll.title);
+	    			//console.log(poll);
+	    			//console.log(poll.title);
 	    			poll.hasEnded = "true";
 	    			//set timeleft to 0
 	    			poll.timeleft = 0;

@@ -31,38 +31,34 @@ app.post('/polls/post', function (req, res){
 		options = req.body.options;
 		recipient = req.body.recipient;
 		lifetime = req.body.lifetime;
+		idNum = 0;
 
-	//var optionsString = JSON.stringify(options);
-	//console.log(optionsString);
+	db.serialize(function() {
+		//create polls table
+		db.run("CREATE TABLE if not exists polls (title TEXT, recipient TEXT, lifetime INT, isVisible INT, hasEnded INT, Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP, huddleID INTEGER PRIMARY KEY AUTOINCREMENT)");
+		
+		//create options table
+		db.run("CREATE TABLE if not exists options (optionName TEXT, optionScore INT, huddleID INTEGER, FOREIGN KEY (huddleID) REFERENCES polls(huddleID))");
 
-	//Fill the rest of the options with dummy data
-	var optionNum = options.length;
-	for (i=optionNum; i<6; i++){
-		options.push({
-			text : "",
-			num : optionNum
+		//add poll
+		var stmt1 = db.prepare("INSERT INTO polls (title, recipient, lifetime, isVisible, hasEnded) VALUES (?, ?, ?, ?, ?)");
+		db.run(title, recipient, lifetime, 1, 0);	
+		stmt1.finalize();
+		
+		//get huddleID to use as foreign key
+		db.get("SELECT huddleID FROM polls ORDER BY huddleID DESC LIMIT 1;", function(err, val) {
+			idNum = val.huddleID;
+
+			//add huddle options to options table
+			var stmt2 = db.prepare("INSERT INTO options (optionName, optionSCore, huddleID) VALUES (?, ?, ?)");
+			options.forEach(function(option){
+				stmt2.run(option.text, 0, idNum);
+			}); 
+			stmt2.finalize();
+
 		});
-	};
-	
-
-	
-	db.serialize(function() {
-		db.run("CREATE TABLE if not exists polls (title TEXT, option1 TEXT, option2 TEXT, option3 TEXT, option4 TEXT, option5 TEXT, score1 INT, score2 INT, score3 INT, score4 INT, score5 INT, recipient TEXT, lifetime INT, isVisible INT, hasEnded INT, Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP, id INTEGER PRIMARY KEY AUTOINCREMENT)");
-		var stmt = db.prepare("INSERT INTO polls (title, option1, option2, option3, option4, option5, score1, score2, score3, score4, score5, recipient, lifetime, isVisible, hasEnded) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-		stmt.run(title, options[0].text, options[1].text, options[2].text, options[3].text, options[4].text, 0, 0, 0, 0, 0, recipient, lifetime, 1, 0);	
-		stmt.finalize();
 	});
-	
-/*
-	db.serialize(function() {
-		db.run("CREATE TABLE if not exists options (optionName TEXT, optionScore INT, huddleID INT, FOREIGN KEY (huddleID) REFERENCES polls(id))");
 
-		var stmt = db.prepare("INSERT INTO options (optionName, optionSCore, huddleID) VALUES (?, ?, ?)");
-		options.forEach(function(option){
-			stmt.run(option.text, 1, 1);
-		}); 
-	});
-*/
 	//db.close();
 	res.send();
 });
@@ -71,10 +67,8 @@ app.post('/polls/post', function (req, res){
 app.post('/hasEnded/post', function (req, res){
 	var pollID = req.body.pollID;
 
-	db.serialize(function(){
-		db.each("SELECT * FROM polls WHERE id==" + pollID, function(err, row){
-			db.run("UPDATE polls SET hasEnded = 1");
-		});
+	db.each("SELECT * FROM polls WHERE huddleID==" + pollID, function(err, row){
+		db.run("UPDATE polls SET hasEnded = 1");
 	});
 
 	res.send();
@@ -84,10 +78,8 @@ app.post('/hasEnded/post', function (req, res){
 app.post('/visibility/post', function (req, res){
 	var pollID = req.body.pollID;
 
-	db.serialize(function(){
-		db.each("SELECT * FROM polls WHERE id==" + pollID, function(err, row){
-			db.run("UPDATE polls SET isVisible = 0 WHERE id==" + pollID);
-		});
+	db.each("SELECT * FROM polls WHERE huddleID==" + pollID, function(err, row){
+		db.run("UPDATE polls SET isVisible = 0 WHERE huddleID==" + pollID);
 	});
 
 	res.send();
@@ -101,25 +93,23 @@ app.post('/score/post', function (req, res){
 		score = req.body.score;
 		column = "";
 
-	db.serialize(function(){
-		db.each("SELECT * FROM polls WHERE id==" + pollID, function(err, row){
-			if(row.option1 == req.body.option){
-				column = "score1";
-			};
-			if(row.option2 == req.body.option){
-				column = "score2";
-			};
-			if(row.option3 == req.body.option){
-				column = "score3";
-			};
-			if(row.option4 == req.body.option){
-				column = "score4";
-			};
-			if(row.option5 == req.body.option){
-				column = "score5";
-			};
-			db.run("UPDATE polls SET " + column + " = " + score + " WHERE id==" + pollID);
-		});
+	db.each("SELECT * FROM polls WHERE huddleID==" + pollID, function(err, row){
+		if(row.option1 == req.body.option){
+			column = "score1";
+		};
+		if(row.option2 == req.body.option){
+			column = "score2";
+		};
+		if(row.option3 == req.body.option){
+			column = "score3";
+		};
+		if(row.option4 == req.body.option){
+			column = "score4";
+		};
+		if(row.option5 == req.body.option){
+			column = "score5";
+		};
+		db.run("UPDATE polls SET " + column + " = " + score + " WHERE huddleID==" + pollID);
 	});
 
 	res.send();
@@ -129,30 +119,20 @@ app.post('/score/post', function (req, res){
 app.get('/polls/get/', function (req, res) {
 	res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
 	var polls = [];
-
-	db.serialize(function(){
-		db.each("SELECT * FROM polls", function(err, row){
-			polls.push({
-				title: row.title,
-				option1: row.option1,
-				option2: row.option2,
-				option3: row.option3,
-				option4: row.option4,
-				option5: row.option5,
-				score1: row.score1,
-				score2: row.score2,
-				score3: row.score3,
-				score4: row.score4,
-				score5: row.score5,
-				recipient: row.recipient,
-				lifetime: row.lifetime,
-				isVisible: row.isVisible,
-				timestamp: row.Timestamp,
-				id : row.id
-			});
-		}, function(){
-		res.send(JSON.stringify(polls));
+	db.each("SELECT * FROM polls", function(err, row) {
+		polls.push({
+			title: row.title,
+			recipient: row.recipient,
+			lifetime: row.lifetime,
+			isVisible: row.isVisible,
+			timestamp: row.Timestamp,
+			id : row.huddleID,
+			option : row.optionName,
+			score : row.optionScore
 		});
+	}, 
+	function(){
+	res.send(JSON.stringify(polls));
 	});
 });
 

@@ -120,6 +120,7 @@ app.get('/polls/get/', function (req, res) {
 	res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
 	var polls = [];
 	db.each("SELECT * FROM polls", function(err, row) {
+		console.log(row);
 		polls.push({
 			title: row.title,
 			recipient: row.recipient,

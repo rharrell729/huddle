@@ -1,12 +1,13 @@
 #####MVP#####
 April:
 -Cleanup
-	-move options/recipients into separate tables: Rob; 1 hr
+	-move options/recipients into separate tables: Rob; 5 hr
 	-fix timer functionality
 		-currently "poll ended" state gets applied to all polls after only one has ended
 	-apply "huddle" terminology throughout (replace vote/poll/etc)
--Creating new huddles and sending to people
+
 -User management
+-Creating new huddles and sending to people
 -Voting on huddles
 -Time range on huddle creation
 

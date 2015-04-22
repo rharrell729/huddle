@@ -1,0 +1,49 @@
+<h3>Create your Huddle.</h3>
+
+<form class="form-horizontal" ng-submit="submit()">
+    <div class="form-group">
+        <label for="pollTitle" class="col-sm-1 control-label">Title</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" ng-model="huddle.title" placeholder="Title">
+        </div>
+    </div>
+
+    <div class="form-group" ng-repeat="option in huddle.options track by $index">
+        <label for="option" class="col-sm-1 control-label">Option {{ $index + 1}}</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" ng-model="option.title" placeholder="Option">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="recipient" class="col-sm-1 control-label">Recipient</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" ng-model="huddle.recipient" placeholder="Recipient">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="recipient" class="col-sm-1 control-label">Time Limit</label>
+        <div class="col-sm-10">
+            <div class="btn-group">
+                <select ng-model="huddle.lifetime" ng-options="lifetime.name for lifetime in lifetimes">
+
+                </select>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-8">
+            <input class="btn btn-default" ng-click="addOption()" type="button" value="Add Option"/>
+            <input class="btn btn-default" ng-click="removeOption()" type="button" value="Remove Option"/>
+        </div>
+        <div class="col-md-1">
+            <input class="btn btn-primary" type="Submit" value="Submit"/>
+        </div>
+    </div>
+
+</form>
+
+

@@ -1,5 +1,5 @@
 __author__ = 'Daniel'
-import simplejson as json
+import json as simplejson
 from django.http import HttpResponse
 from rest_framework.renderers import JSONRenderer
 from glue.models import *

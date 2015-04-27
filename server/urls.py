@@ -11,6 +11,6 @@ urlpatterns = [
     url(r'^api/huddle/list/', view=huddle_list),
     url(r'^api/huddle/create/', view=huddle_create),
     url(r'^admin/', include(admin.site.urls)),
-    #url(r'^', AngularView.as_view())
+    url(r'^', AngularView.as_view())
 ]
 

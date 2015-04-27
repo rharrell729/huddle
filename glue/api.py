@@ -1,6 +1,6 @@
 __author__ = 'Daniel'
 import simplejson as json
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotAllowed
 from rest_framework.renderers import JSONRenderer
 from glue.models import *
 from glue.serializers import *
@@ -11,6 +11,7 @@ class JSONResponse(HttpResponse):
     """
     An HttpResponse that renders its content into JSON.
     """
+
     def __init__(self, data, **kwargs):
         content = JSONRenderer().render(data)
         kwargs['content_type'] = 'application/json'
@@ -28,13 +29,15 @@ def huddle_create(request):
         data = json.loads(request.body)
         options = []
 
-        for option in data['options']:
-            vote = Vote(user=request.user)
-            vote.save()
-
-            option = Option(title=option['title'], votes=[])
-            options.append(option)
+        for data_option in data['options']:
+            option = Option(title=data_option['title'])
             option.save()
-        huddle = Huddle(title=data['title'], creator=request.user, recipients=[request.user], options=options,
-                        end=datetime.now() + datetime.timedelta(minutes=data['lifetime']['value']))
-        huddle.save()
+            options.append(option)
+
+        huddle = Huddle(title=data['title'], creator=request.user,
+                        end=datetime.now() + timedelta(minutes=data['lifetime']['value']))
+
+        huddle.save()  # Need to save before you can access many-to-many fields
+        huddle.options.add(*options)
+        return HttpResponse()
+    return HttpResponseNotAllowed()

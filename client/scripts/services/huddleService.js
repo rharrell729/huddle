@@ -3,6 +3,7 @@ app.service('huddleService', ['$http', function($http) {
         return $http({
             url: '/api/huddle/list/',
             method: 'GET'
+            //params: { 'cachebuster' : new Date().getTime() }
         });
     }
 

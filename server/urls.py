@@ -10,7 +10,12 @@ urlpatterns = [
 
     url(r'^api/huddle/list/', view=huddle_list),
     url(r'^api/huddle/create/', view=huddle_create),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^', AngularView.as_view())
+    url(r'^api/user/data/', view=user_data),
+    url(r'^api/user/signout/', view=user_signout),
+    url(r'^api/user/signin/', view=user_signin),
+    url(r'^api/user/register/', view=user_register),
+    url(r'^admin', include(admin.site.urls)),
+    url(r'^', AngularView.as_view()),
+
 ]
 

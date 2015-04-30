@@ -15,6 +15,12 @@ app.config(['$routeProvider', '$locationProvider',
         when('/create', {
           templateUrl: '/client/partials/create.html',
           controller: 'createHuddleCtrl'
+        }).
+        when('/register', {
+            templateUrl: '/client/partials/register.html',
+            controller: 'registerCtrl'
+        }).otherwise({
+            redirectTo: '/'
         });
 }]);
 

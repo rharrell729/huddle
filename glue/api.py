@@ -1,6 +1,7 @@
 __author__ = 'Daniel'
 import simplejson as json
-from django.http import HttpResponse, HttpResponseNotAllowed
+from django.contrib.auth import logout, authenticate, login
+from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseServerError, HttpResponseRedirect
 from rest_framework.renderers import JSONRenderer
 from glue.models import *
 from glue.serializers import *
@@ -19,9 +20,11 @@ class JSONResponse(HttpResponse):
 
 
 def huddle_list(request):
-    huddles = Huddle.objects.all()  # TODO scope to user
-    serializer = HuddleSerializer(huddles, many=True)
-    return JSONResponse(serializer.data)
+    if request.user.is_authenticated():
+        huddles = Huddle.objects.filter(creator=request.user)
+        serializer = HuddleSerializer(huddles, many=True)
+        return JSONResponse(serializer.data)
+    return JSONResponse({})
 
 
 def huddle_create(request):
@@ -41,3 +44,31 @@ def huddle_create(request):
         huddle.options.add(*options)
         return HttpResponse()
     return HttpResponseNotAllowed()
+
+
+def user_data(request):
+    if request.user.is_authenticated():
+        return JSONResponse({'username': request.user.username, 'email': request.user.email})
+    else:
+        return JSONResponse(False)
+
+
+def user_signout(request):
+    logout(request)
+    return HttpResponse()
+
+
+def user_signin(request):
+    data = json.loads(request.body)
+    user = authenticate(username=data['username'], password=data['password'])
+
+    if user is not None:
+        if user.is_active:
+            login(request, user)
+            return JSONResponse({'username': user.username, 'email': user.email})
+    return HttpResponseServerError()
+
+
+def user_register(request):
+
+    return HttpResponse()

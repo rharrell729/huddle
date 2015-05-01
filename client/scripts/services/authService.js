@@ -1,4 +1,6 @@
-app.service('authService', ['$http', function($http) {
+app.service('authService', ['$http', '$rootScope', function($http, $rootScope) {
+    var user = {};
+
     this.getUserData = function() {
         return $http({
             url: '/api/user/data/',
@@ -27,4 +29,14 @@ app.service('authService', ['$http', function($http) {
             data: account
         })
     }
+
+    this.getUser = function() {
+        return user;
+    }
+
+    this.setUser = function(u) {
+        user = u;
+        $rootScope.$broadcast('UserUpdated', user);
+    }
+
 }]);

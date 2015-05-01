@@ -5,38 +5,38 @@ app.controller('authCtrl', ['$scope', '$rootScope', 'authService', function($sco
     $scope.signout = function() {
         $scope.loaded = false;
         authService.signout().success(function() {
-            $scope.user = null;
             $scope.loaded = true;
-            $rootScope.$broadcast("UserUpdated", $scope.user);
+            authService.setUser(null);
         }).error(function(error) {
             $scope.loaded = true;
-            console.log(error);
-            $rootScope.$broadcast("UserUpdated", $scope.user);
+            console.error(error);
         });
-    }
+    };
 
     $scope.signin = function() {
         $scope.loaded = false;
+        $scope.auth.unauthorized = null;
+
         authService.signin($scope.auth).success(function(user) {
-            $scope.user = user;
             $scope.loaded = true;
-            $rootScope.$broadcast("UserUpdated", $scope.user);
+            authService.setUser(user);
         }).error(function(error) {
+            $scope.auth.unauthorized = true;
             $scope.loaded = true;
-            console.log(error);
-            $rootScope.$broadcast("UserUpdated", $scope.user);
+            console.error(error);
         });
-    }
+    };
 
     authService.getUserData().success(function(user) {
-        console.log(user);
-        $scope.user = user;
+        authService.setUser(user);
         $scope.loaded = true;
-
+        console.log(user);
     }).error(function(error) {
         $scope.loaded = true;
        console.log(error);
     });
 
-
+    $scope.$on('UserUpdated', function(event, model) {
+       $scope.user = model;
+    });
 }]);

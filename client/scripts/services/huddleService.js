@@ -2,8 +2,8 @@ app.service('huddleService', ['$http', function($http) {
     this.getHuddles = function() {
         return $http({
             url: '/api/huddle/list/',
-            method: 'GET'
-            //params: { 'cachebuster' : new Date().getTime() }
+            method: 'GET',
+            params: { 'cachebuster' : new Date().getTime() }
         });
     }
 

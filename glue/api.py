@@ -1,7 +1,7 @@
 __author__ = 'Daniel'
-import json as simplejson
+import simplejson as json
 from django.contrib.auth import logout, authenticate, login
-from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseServerError, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseServerError, HttpResponseForbidden
 from rest_framework.renderers import JSONRenderer
 from glue.models import *
 from glue.serializers import *
@@ -59,23 +59,33 @@ def user_signout(request):
 
 
 def user_signin(request):
-    data = json.loads(request.body)
-    user = authenticate(username=data['username'], password=data['password'])
+    if request.method == "POST":
+        data = json.loads(request.body)
+        if 'username' in data and 'password' in data:
+            user = authenticate(username=data['username'], password=data['password'])
 
-    if user is not None:
-        if user.is_active:
-            login(request, user)
-            return JSONResponse({'username': user.username, 'email': user.email})
-    return HttpResponseServerError()
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return JSONResponse({'username': user.username, 'email': user.email, 'authorized' : True})
+            else:
+                return HttpResponseForbidden()
+    return HttpResponseForbidden()
 
 
 def user_register(request):
     if request.method == "POST":
         data = json.loads(request.body)
 
-        #extract data from body
-        user = User(first_name=data['first_name'], last_name=data['last_name'],
-                    email=data['email'], username=data['username'], password=data['password'])
+        user = User.objects.create(username=data['username'], email=data['email'])
+        user.set_password(data['password'])
+        # Optional fields
+        if 'firstName' in data:
+            user.first_name = data['firstName']
+        if 'lastName' in data:
+            user.last_name = data['lastName']
         user.save()
-        return HttpResponse()
-    return HttpResponseServerError()
+
+        return user_signin(request)
+
+    return HttpResponseNotAllowed()

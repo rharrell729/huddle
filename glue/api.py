@@ -1,5 +1,5 @@
 __author__ = 'Daniel'
-import simplejson as json
+import json as simplejson
 from django.contrib.auth import logout, authenticate, login
 from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseServerError, HttpResponseRedirect
 from rest_framework.renderers import JSONRenderer

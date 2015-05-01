@@ -70,5 +70,12 @@ def user_signin(request):
 
 
 def user_register(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
 
-    return HttpResponse()
+        #extract data from body
+        user = User(first_name=data['first_name'], last_name=data['last_name'],
+                    email=data['email'], username=data['username'], password=data['password'])
+        user.save()
+        return HttpResponse()
+    return HttpResponseServerError()

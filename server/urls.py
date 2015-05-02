@@ -10,6 +10,7 @@ urlpatterns = [
 
     url(r'^api/huddle/list/', view=huddle_list),
     url(r'^api/huddle/create/', view=huddle_create),
+    url(r'^api/huddle/vote/', view=huddle_vote),
     url(r'^api/user/data/', view=user_data),
     url(r'^api/user/signout/', view=user_signout),
     url(r'^api/user/signin/', view=user_signin),

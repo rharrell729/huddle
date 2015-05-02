@@ -5,7 +5,7 @@ app.service('huddleService', ['$http', function($http) {
             method: 'GET',
             params: { 'cachebuster' : new Date().getTime() }
         });
-    }
+    };
 
     this.createHuddle = function(huddleObj) {
         return $http({
@@ -13,5 +13,18 @@ app.service('huddleService', ['$http', function($http) {
             url: '/api/huddle/create/',
             data: huddleObj
         });
-    }
+    };
+
+    this.voteForHuddle = function(huddleId, voteId, value) {
+        return $http({
+           method: 'POST',
+            url: '/api/huddle/vote/',
+            data: {
+                huddleId : huddleId,
+                optionId: voteId,
+                value: value
+            },
+            params: { 'cachebuster': new Date().getTime()}
+        });
+    };
 }]);

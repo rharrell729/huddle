@@ -46,6 +46,31 @@ def huddle_create(request):
     return HttpResponseNotAllowed()
 
 
+def huddle_vote(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+
+        if 'huddleId' in data and 'optionId' in data and 'value' in data:
+            huddle = Huddle.objects.get(pk=data['huddleId'])
+            option = Option.objects.get(pk=data['optionId'])
+            value = bool(data['value'])
+
+            if huddle is not None and option is not None:
+                if value:
+                    Vote.objects.filter(votes__options__id=huddle.pk, user=request.user).delete()
+                else:
+                    Vote.objects.filter(votes__id=option.pk, user=request.user).delete()
+
+                if value:
+                    vote = Vote.objects.create(user=request.user)
+                    vote.save()
+                    option.votes.add(vote)
+
+                serializer = HuddleSerializer(huddle)
+                return JSONResponse(serializer.data)
+    return HttpResponseNotAllowed()
+
+
 def user_data(request):
     if request.user.is_authenticated():
         return JSONResponse({'username': request.user.username, 'email': request.user.email})

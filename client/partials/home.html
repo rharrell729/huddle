@@ -12,75 +12,12 @@
     <!-- Main hero unit for a primary marketing message or call to action -->
     <div class="hero-unit">
         <div class="panel panel-default" ng-repeat="huddle in huddles track by $index">
-            <div class="panel-heading">
-                <h3>{{ huddle.title }} </h3>
-            </div>
-            <div class="panel-body">
-                Members invited:
-                <span ng-repeat="recipient in huddle.recipients">
-                    {{ recipient }}
-                </span>
-            </div>
-
-            <table class="table">
-                <th>Option</th>
-                <th>Votes</th>
-                <tr ng-repeat="option in huddle.options">
-                    <td>
-                        {{ option.title }}
-                    </td>
-                    <td>
-                        {{ option.votes.length }}
-                    </td>
-                </tr>
-            </table>
+            <div huddle></div>
         </div>
     </div>
 
     <div>
         <a class="btn btn-primary btn-lg" href="/create" role="button">Create Huddle &raquo;</a>
     </div>
-<!--
-      <div class="hero-unit" ng-controller="homeCtrl">
-        <div ng-repeat="poll in polls" ng-show="poll.visible">
-          <div class="row">
-            <div class="col-md-1">
-              <font size = "5" >{{poll.title}}</font>
-            </div>
-            <div class="col-md-1">
-              <button class="btn btn-default btn-square" ng-show="poll.hasEnded" ng-click="hidePoll(poll)">X
-              </button>
-            </div>
-          </div>
-          <table class="table">
-            <tr class="active" ng-repeat="option in poll.options">
-              <td class="col-md-1" style="background-color: {{option.color}};">{{option.name}}</div>
-              <td class="col-md-1" style="background-color: {{option.color}};">{{option.score}}</div>
-              <td class="col-md-1" style="background-color: {{option.color}};">
-                <button class="btn btn-default btn-circle" ng-disabled="poll.hasEnded" ng-click="vote(option, poll)">
-                  +
-                </button>
-              </div>
-            </div>
-          </table>
-          <div class="row">
-            <div class="col-md-8">Sent to: {{poll.recipient}}</div>
-          </div>
-          <div class="row">
-            <div class="col-md-8">
-              Time Left: {{poll.timeleft}} minutes
-            </div>
-          </div>
-        </div>
-      
-      <br>
-      <p><a class="btn btn-primary btn-lg" href="/create" role="button">Create Huddle &raquo;</a></p>
 
-      </div>
--->
-      <hr>
-
-      <footer>
-        <p>&copy; Vote 2014</p>
-      </footer>
-    </div> <!-- /container -->
+</div>

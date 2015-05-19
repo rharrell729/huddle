@@ -1,23 +1,17 @@
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
       <div class="container">
-        <h2>Hello, world!</h2>
         <p>Thanks for using Huddle, the ultimate group decision maker.</p>
       </div>
     </div>
 
     <div class="container">
+        <h2>My Huddles <a class="btn btn-primary btn pull-right" href="/create" role="button">Create Huddle &raquo;</a></h2>
 
-    <h2>My Huddles</h2>
     <!-- Main hero unit for a primary marketing message or call to action -->
     <div class="hero-unit">
         <div class="panel panel-default" ng-repeat="huddle in huddles track by $index">
             <div huddle></div>
         </div>
     </div>
-
-    <div>
-        <a class="btn btn-primary btn-lg" href="/create" role="button">Create Huddle &raquo;</a>
-    </div>
-
 </div>

@@ -2,23 +2,29 @@
     <h3>{{ huddle.title }} </h3>
 </div>
 <div class="panel-body">
-    Members invited:
+    Created by: {{ huddle.creator }}
+    <br>
+    Sent to:
     <span ng-repeat="recipient in huddle.recipients">
         {{ huddle.recipient }}
     </span>
+    <br>
+    <button type="button" class="btn btn-default">Share</button>
 </div>
 
 <table class="table">
-    <th>Option</th>
-    <th>Votes</th>
     <tr ng-repeat="option in huddle.options track by $index">
         <td>
             {{ option.title }}
         </td>
         <td>
-            {{ option.votes.length }}
-            <a href class="glyphicon glyphicon-ok" ng-click="vote(huddle.id, option.id, true)"></a>
-            <a href class="glyphicon glyphicon-remove" ng-click="vote(huddle.id, option.id, false)"></a>
+            <button type="button" class="btn btn-default">
+                {{ option.votes.length }}
+                <a href class="glyphicon glyphicon-plus" ng-click="vote(huddle.id, option.id, true)"></a>
+            </button>
+        </td>
+        <td>
+            <button type="button" class="btn btn-default">More info <span class="caret"></span></button>
         </td>
     </tr>
 </table>

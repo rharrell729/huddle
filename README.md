@@ -1,14 +1,15 @@
 # huddle
 
 TODO for MVP:
-1. Wrap up huddle functionality
-2. Fix hamburger on mobile responsive view
-3. Display recipients for polls
-4. Enable sms send link for huddle
-5. Tie into Google Location and Places APIs to display more information when users click "more info"
-6. Host site in app shell
-7. Deploy
-8. Validation strategy
+1. Wrap up huddle/user functionality - 4 hours ish
+2. get rid of hamburger on mobile responsive view - 10 minutes
+3. Display recipients for polls - 30 minutes
+4. Enable sms send link for huddle - 1 hours
+5. Tie into Google Location and Places APIs to display more information when users click "more info" - 8 hours
+   mock info UI for create view and home view - 2 hours (Rob)
+6. Host site in app shell - 4 hours (Rob)
+7. Deploy - 2 hours 
+8. Validation strategy - 2 hours (Rob)
 
 Backlog:
 1. Google/FB auth
